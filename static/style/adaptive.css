@@ -319,6 +319,40 @@
         border-radius: 50px;
         z-index: 1;
     }
+    .time_lap_text .line_vid_au {
+        width: 1232px;
+        height: 1px;
+        margin-top: 116px;
+        background: #FFFFFF;
+    }
+    .time_lap_text .line_rel_vid {
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        background: #FFFFFF;
+        left: 300px;
+        color: #000000;
+         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+    .time_lap_text .scissors_line1 {
+        display: inline;
+        width: 40px;
+        height: 20px;
+        margin-right: 1200px;
+        margin-top: 15px;
+        background: #7166F5;
+        border-radius: 50px;
+        z-index: 1;
+    }
+    .time_lap_text .scissors_line2 {
+        display: inline;
+        width: 40px;
+        height: 20px;
+        margin-top: 15px;
+        background: #7166F5;
+        border-radius: 50px;
+        z-index: 1;
+    }
 }
 
 
