@@ -5,96 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style/style.css">
-    <link rel="stylesheet" href="../static/style/adaptive.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/adaptive.css">
     <title>VideoEditor</title>
-    <script>
-        var VIDEO_CANVAS = null;
-        const FRAME_RATE = 30;
-        let video1; let video2;
-        let isPlay = true;
-        let h = 0;
-        function main() {
-            video1  = initializeVideo("video1.mp4");
-            video2  = initializeVideo("video2.mp4");
-            VIDEO_CANVAS  = document.getElementById('video');
-
-            video1.addEventListener('loadeddata', (event) => {
-                const context = VIDEO_CANVAS.getContext("2d");
-                context.canvas.width  = video1.videoWidth;
-                context.canvas.height = video1.videoHeight;
-                processVideos(video1, video2, 0, 70);
-            });
-        }
-
-        function initializeVideo(filename) {
-            var video = document.createElement('video');
-            video.src=filename;
-            video.load();
-            return video;
-        }
-
-        function processVideos(video1, video2, frame1, frame2){
-            const context = VIDEO_CANVAS.getContext("2d");
-            if(isPlay) {
-                if(true){
-                    moveTimeLine(frame1);
-                    showVideoFrame(video1, frame1);
-                    frame1++;
-            }
-
-            // if (frame1 >= 127) {
-            //  moveTimeLine(frame2);
-            //  showVideoFrame(video2, frame2);
-            //  frame2++;
-            // }
-            showFrameNumbers(frame1, frame2);
-            }
-            setTimeout(function() {
-                processVideos(video1, video2, frame1, frame2);
-            }, FRAME_RATE);
-        }
-
-        function showFrameNumbers(frame1, frame2) {
-            const context = VIDEO_CANVAS.getContext("2d");
-            context.font = "30px Arial";
-            context.textAlign    = "left";
-            context.textBaseline = "top";
-            context.fillStyle    = "black";
-            context.fillText(video2.duration, 5, 5);
-        }
-
-        function showVideoFrame(video, frame, isReverse = false) {
-            var time = frame / FRAME_RATE;
-            if (isReverse) {
-                time = video.duration - time;
-            }
-            video.currentTime = time;
-            var offsetX=0;
-            var offsetY=0;
-            var context = VIDEO_CANVAS.getContext("2d");
-            context.drawImage(video, offsetX, offsetY, VIDEO_CANVAS.width, VIDEO_CANVAS.height);
-        }
-        function stopVideo(){
-            if(isPlay){
-                isPlay = false;
-            }else{
-                isPlay = true;
-            }
-        }
-        function moveTimeLine(frame){
-            var time = (frame / FRAME_RATE);
-            var colvoFrames = (video1.duration) * 30;
-            var toMove = (1600 / colvoFrames);
-            var timeline = Number((document.getElementById("timeline").style.marginRight).replace("px", ""));
-            document.getElementById("timeline").style.marginRight = (timeline - toMove).toString() + "px";
-            if(timeline <= -800){
-                isPlay = false;
-            }
-            console.log(toMove);
-            console.log(document.getElementById("timeline").style.marginRight)
-        }
-    </script>
 </head>
 
 <body onload="main()">
@@ -103,10 +16,10 @@
     </nav>
     <div class="container">
         <div class="tools">
-            <img src="../static/img/scissor_47188 1.png" alt="scissors" id="scissors">
-            <img src="../static/img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png" alt="tools" id="tools_icon">
-            <img src="../static/img/texteditor_78423 1.png" alt="text" id="text">
-            <img src="../static/img/art-palette_47204 1.png" alt="palette" id="palette">
+            <img src="img/scissor_47188 1.png" alt="scissors" id="scissors">
+            <img src="img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png" alt="tools" id="tools_icon">
+            <img src="img/texteditor_78423 1.png" alt="text" id="text">
+            <img src="img/art-palette_47204 1.png" alt="palette" id="palette">
         </div>
 
         <div class="video_container">
@@ -121,21 +34,132 @@
         </div>
 
         <div class="video_recorder">
-            <canvas class="video_recorder" id="video" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #000000"></canvas>
+            <canvas id="video" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #000000"></canvas>
         </div>
     </div>
     <div class="button">
-        <img src="../static/img/skip-forward_icon-icons 2.png" alt="skip_left" id="skip_left">
-        <img src="../static/img/playbutton_113628 1.png" alt="playbutton" id="playbutton">
-        <img src="../static/img/skip-forward_icon-icons 1.png" alt="skip_right" id="skip_right">
+        <img src="img/skip-forward_icon-icons 2.png" alt="skip_left" id="skip_left">
+        <img src="img/playbutton_113628 1.png" alt="playbutton" id="playbutton" onclick="stopVideo();">
+        <img src="img/skip-forward_icon-icons 1.png" alt="skip_right" id="skip_right">
     </div>
 
     <div class="time_lap">
-        <div class="line_rel_vid"></div>
+        <div id="timeline" class="line_rel_vid"></div>
         <div class="scissors_line1"></div>
         <div class="scissors_line2"></div>
     </div>
+    <script>
+        var VIDEO_CANVAS = null;
+        const FRAME_RATE = 30;
+        let video1; let video2;
+        let isPlay = true;
+        let isStart = true;
+        let h = 0;
+        function main() {
+            video1  = initializeVideo("video2.mp4");
+            video2  = initializeVideo("video1.mp4");
+            VIDEO_CANVAS  = document.getElementById('video');
 
+            video1.addEventListener('loadeddata', (event) => {
+                const context = VIDEO_CANVAS.getContext("2d");
+                context.canvas.width  = video1.videoWidth;
+                context.canvas.height = video1.videoHeight;
+                processVideos(video1, video2, 0, 70);
+            });
+        }
+        
+        function initializeVideo(filename) {
+            var video = document.createElement('video');
+            video.src=filename;
+            video.load();
+            return video;
+        }
+        
+        function processVideos(video1, video2, frame1, frame2){
+            const context = VIDEO_CANVAS.getContext("2d");
+            if(isPlay) {
+                if(true){
+                    moveTimeLine(frame1);
+                    showVideoFrame(video1, frame1);
+                    frame1++;
+                }
+
+            // if (frame1 >= 127) {
+            //  moveTimeLine(frame2);
+            //  showVideoFrame(video2, frame2);
+            //  frame2++;
+            // }
+            showFrameNumbers(frame1, frame2);
+        }
+        setTimeout(function() {
+            processVideos(video1, video2, frame1, frame2);
+        }, FRAME_RATE);
+    }
+
+    function showFrameNumbers(frame1, frame2) {
+        const context = VIDEO_CANVAS.getContext("2d");
+        context.font = "30px Arial";
+        context.textAlign    = "left";
+        context.textBaseline = "top";
+        context.fillStyle    = "black";
+        context.fillText(video2.duration, 5, 5);
+    }
+    
+    function showVideoFrame(video, frame, isReverse = false) {
+        var time = frame / FRAME_RATE;
+        if (isReverse) {
+            time = video.duration - time;
+        }
+        video.currentTime = time;
+        var offsetX=0;
+        var offsetY=0;
+        var context = VIDEO_CANVAS.getContext("2d");
+        context.drawImage(video, offsetX, offsetY, VIDEO_CANVAS.width, VIDEO_CANVAS.height);
+    }
+    function stopVideo(){
+        if(isPlay){
+            isPlay = false;
+        }else{
+            isPlay = true;
+        }
+    }
+    function moveTimeLine(frame){
+        var time = (frame / FRAME_RATE);
+        var colvoFrames = (video1.duration) * 30;
+        var toMove = (1150 / colvoFrames);
+        var timeline;
+        if(isStart){
+            timeline = 300;
+            isStart = false;
+        }else {
+            timeline = Number((document.getElementById("timeline").style.left).replace("px", ""));   
+        }
+        document.getElementById("timeline").style.left = (timeline + toMove).toString() + "px";
+        if(timeline >= 1450){
+            isPlay = false;
+        }
+    }
+    document.addEventListener('keyup', function(event) {
+        if (event.keyCode == '32') {
+            stopVideo();
+        }
+    });
+    var listener = function(e) {
+        console.log('dick');
+        var tl = document.getElementById('timeline');
+        tl.style.left = e.pageX - 5 + "px";
+    };
+
+    timeline.addEventListener('mousedown', e => {
+        document.addEventListener('mousemove', listener);
+        isPlay = false;
+    });
+
+    timeline.addEventListener('mouseup', e => {
+        document.removeEventListener('mousemove', listener);
+        isPlay = true;
+    });
+</script>
 </body>
 
 </html>

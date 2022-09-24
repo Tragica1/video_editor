@@ -179,7 +179,7 @@ body::-webkit-scrollbar-thumb {
 
 .time_lap {
     display: flex;
-    width: 1418px;
+    width: 1232px;
     height: 232px;
     background: #0B0A0A;
     border-radius: 40px;
@@ -188,7 +188,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .time_lap .line_vid_au {
-    width: 1418px;
+    width: 1232px;
     height: 1px;
     margin-top: 116px;
     background: #FFFFFF;
@@ -199,7 +199,7 @@ body::-webkit-scrollbar-thumb {
     width: 4px;
     height: 232px;
     background: #FFFFFF;
-    left: 1300px;
+    left: 300px;
     z-index: 1;
 }
 
