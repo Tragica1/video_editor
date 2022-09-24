@@ -16,7 +16,7 @@
     </nav>
     <div class="container">
         <div class="tools">
-            <img src="img/scissor_47188 1.png" alt="scissors" id="scissors">
+            <img src="img/scissor_47188 1.png" alt="scissors" id="scissors" onclick="cutFrame();">
             <img src="img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png" alt="tools" id="tools_icon">
             <img src="img/texteditor_78423 1.png" alt="text" id="text">
             <img src="img/art-palette_47204 1.png" alt="palette" id="palette">
@@ -148,7 +148,9 @@
         let video1; let video2;
         let isPlay = true;
         let isStart = true;
-        let h = 0;
+        let currentFrame = 0;
+        let cutFrames = [];
+        let cutState = 0; let tmpArr = [];
         function main() {
             video1  = initializeVideo("video2.mp4");
             video2  = initializeVideo("video1.mp4");
@@ -158,7 +160,7 @@
                 const context = VIDEO_CANVAS.getContext("2d");
                 context.canvas.width  = video1.videoWidth;
                 context.canvas.height = video1.videoHeight;
-                processVideos(video1, video2, 0, 70);
+                processVideos(video1, video2, 0);
             });
         }
         
@@ -169,13 +171,21 @@
             return video;
         }
         
-        function processVideos(video1, video2, frame1, frame2){
+        function processVideos(video1, video2, frame1){
             const context = VIDEO_CANVAS.getContext("2d");
             if(isPlay) {
-                if(true){
-                    moveTimeLine(frame1);
-                    showVideoFrame(video1, frame1);
-                    frame1++;
+                moveTimeLine(currentFrame);
+                showVideoFrame(video1, currentFrame);
+                currentFrame++;
+
+                if(cutFrames.length != 0){
+                    for(let i = 0; i <= cutFrames.length-1; i++){
+                        console.log(cutFrames[i]);
+                        if(currentFrame >= cutFrames[i][0] && currentFrame < cutFrames[i][1]){
+                            currentFrame = cutFrames[i][1];
+                            break;
+                    }
+                }
                 }
 
             // if (frame1 >= 127) {
@@ -183,14 +193,14 @@
             //  showVideoFrame(video2, frame2);
             //  frame2++;
             // }
-            showFrameNumbers(frame1, frame2);
+            showFrameNumbers(currentFrame);
         }
         setTimeout(function() {
-            processVideos(video1, video2, frame1, frame2);
+            processVideos(video1, video2, currentFrame);
         }, FRAME_RATE);
     }
 
-    function showFrameNumbers(frame1, frame2) {
+    function showFrameNumbers() {
         const context = VIDEO_CANVAS.getContext("2d");
         context.font = "30px Arial";
         context.textAlign    = "left";
@@ -201,6 +211,7 @@
     
     function showVideoFrame(video, frame, isReverse = false) {
         var time = frame / FRAME_RATE;
+        document.getElementById("curTime").innerHTML = time;
         if (isReverse) {
             time = video.duration - time;
         }
@@ -233,25 +244,50 @@
             isPlay = false;
         }
     }
+
+    function cutFrame(){
+        if(cutState == 0){
+            tmpArr.push(currentFrame);
+            cutState++;
+        }else if (cutState == 1) {
+            tmpArr.push(currentFrame);
+            cutFrames.push(tmpArr);
+            tmpArr = [];
+            cutState = 0;
+        }
+    }
+
+
     document.addEventListener('keyup', function(event) {
         if (event.keyCode == '32') {
             stopVideo();
         }
     });
     var listener = function(e) {
-        console.log('dick');
         var tl = document.getElementById('timeline');
-        tl.style.left = e.pageX - 5 + "px";
+        tlN = Number((tl.style.left).replace("px", "")); 
+        if(tlN >= 300 && tlN <= 1450){
+            tl.style.left = e.pageX - 5 + "px";
+            var colvoFrames = (video1.duration) * 30;
+            var toMove = (1150 / colvoFrames);
+            var currentLinePos = Number((tl.style.left).replace("px", "")) - 300;
+            currentFrame = currentLinePos / toMove;
+            if(!isPlay){
+                showVideoFrame(video1, currentFrame);
+            }
+        }else{
+            tl.style.left = '300px';
+            currentFrame = 0;
+            document.removeEventListener('mousemove', listener);
+        }
     };
 
     timeline.addEventListener('mousedown', e => {
         document.addEventListener('mousemove', listener);
-        isPlay = false;
     });
 
     timeline.addEventListener('mouseup', e => {
         document.removeEventListener('mousemove', listener);
-        isPlay = true;
     });
 </script>
 </body>
