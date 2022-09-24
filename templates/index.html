@@ -48,6 +48,18 @@
         <div class="scissors_line1"></div>
         <div class="scissors_line2"></div>
     </div>
+	<div class="modal" data-modal="1">
+        <!--   Svg иконка для закрытия окна  -->
+        <img class="modal__cross js-modal-close" src="img/cross-svgrepo-com.svg"></img>
+        <form enctype="multipart/form-data" method="post">
+            <p>Загрузите ваше видео</p>
+            <p class="modal__title"><label for="video_file">Choose video</label><input type="file" name="video_file" id="video_file">
+                <input type="submit" id="button_sub" value="Отправить"></p>
+        </form>
+    </div>
+
+    <!-- Подложка под модальным окном -->
+    <div class="overlay js-overlay-modal"></div>
     <script>
         var VIDEO_CANVAS = null;
         const FRAME_RATE = 30;
