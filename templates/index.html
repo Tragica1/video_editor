@@ -5,192 +5,198 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/adaptive.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/adaptive.css') }}">
     <title>VideoEditor</title>
 </head>
 
 <body onload="main()">
-    <nav class="nav_bar">
-        <h1 class="name_site">VideoEditor</h1>
-    </nav>
-    <div class="container">
-        <div class="tools">
-            <img src="img/scissor_47188 1.png" alt="scissors" id="scissors" onclick="cutFrame();">
-            <img src="img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png" alt="tools" id="tools_icon">
-            <img src="img/texteditor_78423 1.png" alt="text" id="text">
-            <img src="img/art-palette_47204 1.png" alt="palette" id="palette">
-        </div>
-
-        <div class="video_container">
-            <div class="video_add_site"></div>
-            <div class="video_add_site1"></div>
-            <div class="video_add_site"></div>
-            <div class="video_add_site1"></div>
-            <div class="video_add_site"></div>
-            <div class="video_add_site1"></div>
-            <div class="video_add_site"></div>
-            <div class="video_add_site1"></div>
-        </div>
-
-        <div class="video_recorder">
-            <canvas id="video" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #000000"></canvas>
-        </div>
-    </div>
-    <div class="button">
-        <img src="img/skip-forward_icon-icons 2.png" alt="skip_left" id="skip_left">
-        <img src="img/playbutton_113628 1.png" alt="playbutton" id="playbutton" onclick="stopVideo();">
-        <img src="img/skip-forward_icon-icons 1.png" alt="skip_right" id="skip_right">
-    </div>
-    <div class="time_lap_text">
-        <div id="timeline1" class="line_rel_vid"><h5 id="curTime" style="color: #ffffff;">00000</h5></div>
-        <div class="scissors_line1"><h5 style="color: #ffffff">00:00</h5></div>
-        <div class="scissors_line2"></div>
-    </div>
-    <div class="time_lap">
-        <div id="timeline" class="line_rel_vid"></div>
-        <div class="scissors_line1"></div>
-        <div class="scissors_line2"></div>
-    </div>
-	<div class="modal" data-modal="1">
-        <!--   Svg иконка для закрытия окна  -->
-        <img class="modal__cross js-modal-close" src="img/cross-svgrepo-com.svg"></img>
-        <form enctype="multipart/form-data" method="post">
-            <p>Загрузите ваше видео</p>
-            <p class="modal__title"><label for="video_file">Choose video</label><input type="file" name="video_file" id="video_file">
-                <input type="submit" id="button_sub" value="Отправить"></p>
-        </form>
+<nav class="nav_bar">
+    <h1 class="name_site">VideoEditor</h1>
+</nav>
+<div class="container">
+    <div class="tools">
+        <img src="{{ url_for('static', filename='img/scissor_47188 1.png') }}" alt="scissors" id="scissors"
+             onclick="cutFrame();">
+        <img src="{{ url_for('static', filename='img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png') }}"
+             alt="tools" id="tools_icon" class="js-open-modal" data-modal="1">
+        <img src="{{ url_for('static', filename='img/texteditor_78423 1.png') }}" alt="text" id="text">
+        <img src="{{ url_for('static', filename='img/art-palette_47204 1.png') }}" alt="palette" id="palette">
     </div>
 
-    <!-- Подложка под модальным окном -->
-    <div class="overlay js-overlay-modal"></div>
+    <div class="video_container">
+        <div class="video_add_site"></div>
+        <div class="video_add_site1"></div>
+        <div class="video_add_site"></div>
+        <div class="video_add_site1"></div>
+        <div class="video_add_site"></div>
+        <div class="video_add_site1"></div>
+        <div class="video_add_site"></div>
+        <div class="video_add_site1"></div>
+    </div>
 
-    <script>
-        ! function(e) {
-            "function" != typeof e.matches && (e.matches = e.msMatchesSelector || e.mozMatchesSelector || e.webkitMatchesSelector || function(e) {
-                for (var t = this, o = (t.document || t.ownerDocument).querySelectorAll(e), n = 0; o[n] && o[n] !== t;) ++n;
-                return Boolean(o[n])
-            }), "function" != typeof e.closest && (e.closest = function(e) {
-                for (var t = this; t && 1 === t.nodeType;) {
-                    if (t.matches(e)) return t;
-                    t = t.parentNode
-                }
-                return null
-            })
-        }(window.Element.prototype);
+    <div class="video_recorder">
+        <canvas id="video" style="width: 100%; height:100%; border-radius: 10px; border: 1px solid #000000"></canvas>
+    </div>
+</div>
+<div class="button">
+    <img src="{{ url_for('static', filename='img/skip-forward_icon-icons 2.png') }}" alt="skip_left" id="skip_left">
+    <img src="{{ url_for('static', filename='img/playbutton_113628 1.png') }}" alt="playbutton" id="playbutton"
+         onclick="stopVideo();">
+    <img src="{{ url_for('static', filename='img/skip-forward_icon-icons 1.png') }}" alt="skip_right" id="skip_right">
+</div>
+<div class="time_lap_text">
+    <div id="timeline1" class="line_rel_vid"><h5 id="curTime" style="color: #ffffff;">00000</h5></div>
+    <div class="scissors_line1"><h5 style="color: #ffffff">00:00</h5></div>
+    <div class="scissors_line2"></div>
+</div>
+<div class="time_lap">
+    <div id="timeline" class="line_rel_vid"></div>
+    <div class="scissors_line1"></div>
+    <div class="scissors_line2"></div>
+</div>
+<div class="modal" data-modal="1">
+    <!--   Svg иконка для закрытия окна  -->
+    <img class="modal__cross js-modal-close" src="{{ url_for('static', filename='img/cross-svgrepo-com.svg') }}"/>
+    <form enctype="multipart/form-data" method="post">
+        <p>Загрузите ваше видео</p>
+        <p class="modal__title"><label for="video_file">Choose video</label><input type="file" name="video_file"
+                                                                                   id="video_file">
+            <input type="submit" id="button_sub" value="Отправить"></p>
+    </form>
+</div>
 
+<!-- Подложка под модальным окном -->
+<div class="overlay js-overlay-modal"></div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-
-            /* Записываем в переменные массив элементов-кнопок и подложку.
-               Подложке зададим id, чтобы не влиять на другие элементы с классом overlay*/
-            var modalButtons = document.querySelectorAll('.js-open-modal'),
-                overlay = document.querySelector('.js-overlay-modal'),
-                closeButtons = document.querySelectorAll('.js-modal-close');
-
-
-            /* Перебираем массив кнопок */
-            modalButtons.forEach(function(item) {
-
-                /* Назначаем каждой кнопке обработчик клика */
-                item.addEventListener('click', function(e) {
-
-                    /* Предотвращаем стандартное действие элемента. Так как кнопку разные
-                       люди могут сделать по-разному. Кто-то сделает ссылку, кто-то кнопку.
-                       Нужно подстраховаться. */
-                    e.preventDefault();
-
-                    /* При каждом клике на кнопку мы будем забирать содержимое атрибута data-modal
-                       и будем искать модальное окно с таким же атрибутом. */
-                    var modalId = this.getAttribute('data-modal'),
-                        modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
-
-
-                    /* После того как нашли нужное модальное окно, добавим классы
-                       подложке и окну чтобы показать их. */
-                    modalElem.classList.add('active');
-                    overlay.classList.add('active');
-                }); // end click
-
-            }); // end foreach
-
-
-            closeButtons.forEach(function(item) {
-
-                item.addEventListener('click', function(e) {
-                    var parentModal = this.closest('.modal');
-
-                    parentModal.classList.remove('active');
-                    overlay.classList.remove('active');
-                });
-
-            }); // end foreach
+<script>
+    !function (e) {
+        "function" != typeof e.matches && (e.matches = e.msMatchesSelector || e.mozMatchesSelector || e.webkitMatchesSelector || function (e) {
+            for (var t = this, o = (t.document || t.ownerDocument).querySelectorAll(e), n = 0; o[n] && o[n] !== t;) ++n;
+            return Boolean(o[n])
+        }), "function" != typeof e.closest && (e.closest = function (e) {
+            for (var t = this; t && 1 === t.nodeType;) {
+                if (t.matches(e)) return t;
+                t = t.parentNode
+            }
+            return null
+        })
+    }(window.Element.prototype);
 
 
-            document.body.addEventListener('keyup', function(e) {
-                var key = e.keyCode;
+    document.addEventListener('DOMContentLoaded', function () {
 
-                if (key == 27) {
-
-                    document.querySelector('.modal.active').classList.remove('active');
-                    document.querySelector('.overlay').classList.remove('active');
-                };
-            }, false);
+        /* Записываем в переменные массив элементов-кнопок и подложку.
+           Подложке зададим id, чтобы не влиять на другие элементы с классом overlay*/
+        var modalButtons = document.querySelectorAll('.js-open-modal'),
+            overlay = document.querySelector('.js-overlay-modal'),
+            closeButtons = document.querySelectorAll('.js-modal-close');
 
 
-            overlay.addEventListener('click', function() {
+        /* Перебираем массив кнопок */
+        modalButtons.forEach(function (item) {
+
+            /* Назначаем каждой кнопке обработчик клика */
+            item.addEventListener('click', function (e) {
+
+                /* Предотвращаем стандартное действие элемента. Так как кнопку разные
+                   люди могут сделать по-разному. Кто-то сделает ссылку, кто-то кнопку.
+                   Нужно подстраховаться. */
+                e.preventDefault();
+
+                /* При каждом клике на кнопку мы будем забирать содержимое атрибута data-modal
+                   и будем искать модальное окно с таким же атрибутом. */
+                var modalId = this.getAttribute('data-modal'),
+                    modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
+
+
+                /* После того как нашли нужное модальное окно, добавим классы
+                   подложке и окну чтобы показать их. */
+                modalElem.classList.add('active');
+                overlay.classList.add('active');
+            }); // end click
+
+        }); // end foreach
+
+
+        closeButtons.forEach(function (item) {
+
+            item.addEventListener('click', function (e) {
+                var parentModal = this.closest('.modal');
+
+                parentModal.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+        }); // end foreach
+
+
+        document.body.addEventListener('keyup', function (e) {
+            var key = e.keyCode;
+
+            if (key == 27) {
+
                 document.querySelector('.modal.active').classList.remove('active');
-                this.classList.remove('active');
-            });
+                document.querySelector('.overlay').classList.remove('active');
+            }
+            ;
+        }, false);
 
 
+        overlay.addEventListener('click', function () {
+            document.querySelector('.modal.active').classList.remove('active');
+            this.classList.remove('active');
+        });
 
 
-        }); // end ready
-        var VIDEO_CANVAS = null;
-        const FRAME_RATE = 30;
-        let video1; let video2;
-        let isPlay = true;
-        let isStart = true;
-        let currentFrame = 0;
-        let cutFrames = [];
-        let cutState = 0; let tmpArr = [];
-        function main() {
-            video1  = initializeVideo("video2.mp4");
-            video2  = initializeVideo("video1.mp4");
-            VIDEO_CANVAS  = document.getElementById('video');
+    }); // end ready
+    var VIDEO_CANVAS = null;
+    const FRAME_RATE = 30;
+    let video1;
+    let video2;
+    let isPlay = true;
+    let isStart = true;
+    let currentFrame = 0;
+    let cutFrames = [];
+    let cutState = 0;
+    let tmpArr = [];
 
-            video1.addEventListener('loadeddata', (event) => {
-                const context = VIDEO_CANVAS.getContext("2d");
-                context.canvas.width  = video1.videoWidth;
-                context.canvas.height = video1.videoHeight;
-                processVideos(video1, video2, 0);
-            });
-        }
-        
-        function initializeVideo(filename) {
-            var video = document.createElement('video');
-            video.src=filename;
-            video.load();
-            return video;
-        }
-        
-        function processVideos(video1, video2, frame1){
+    function main() {
+        video1 = initializeVideo("static/media/video2.mp4");
+        video2 = initializeVideo("static/media/video1.mp4");
+        VIDEO_CANVAS = document.getElementById('video');
+
+        video1.addEventListener('loadeddata', (event) => {
             const context = VIDEO_CANVAS.getContext("2d");
-            if(isPlay) {
-                moveTimeLine(currentFrame);
-                showVideoFrame(video1, currentFrame);
-                currentFrame++;
+            context.canvas.width = video1.videoWidth;
+            context.canvas.height = video1.videoHeight;
+            processVideos(video1, video2, 0);
+        });
+    }
 
-                if(cutFrames.length != 0){
-                    for(let i = 0; i <= cutFrames.length-1; i++){
-                        console.log(cutFrames[i]);
-                        if(currentFrame >= cutFrames[i][0] && currentFrame < cutFrames[i][1]){
-                            currentFrame = cutFrames[i][1];
-                            break;
+    function initializeVideo(filename) {
+        var video = document.createElement('video');
+        video.src = filename;
+        video.load();
+        return video;
+    }
+
+    function processVideos(video1, video2, frame1) {
+        const context = VIDEO_CANVAS.getContext("2d");
+        if (isPlay) {
+            moveTimeLine(currentFrame);
+            showVideoFrame(video1, currentFrame);
+            currentFrame++;
+
+            if (cutFrames.length != 0) {
+                for (let i = 0; i <= cutFrames.length - 1; i++) {
+                    console.log(cutFrames[i]);
+                    if (currentFrame >= cutFrames[i][0] && currentFrame < cutFrames[i][1]) {
+                        currentFrame = cutFrames[i][1];
+                        break;
                     }
                 }
-                }
+            }
 
             // if (frame1 >= 127) {
             //  moveTimeLine(frame2);
@@ -199,7 +205,7 @@
             // }
             showFrameNumbers(currentFrame);
         }
-        setTimeout(function() {
+        setTimeout(function () {
             processVideos(video1, video2, currentFrame);
         }, FRAME_RATE);
     }
@@ -207,12 +213,12 @@
     function showFrameNumbers() {
         const context = VIDEO_CANVAS.getContext("2d");
         context.font = "30px Arial";
-        context.textAlign    = "left";
+        context.textAlign = "left";
         context.textBaseline = "top";
-        context.fillStyle    = "black";
+        context.fillStyle = "black";
         context.fillText(video2.duration, 5, 5);
     }
-    
+
     function showVideoFrame(video, frame, isReverse = false) {
         var time = frame / FRAME_RATE;
         document.getElementById("curTime").innerHTML = time;
@@ -220,40 +226,42 @@
             time = video.duration - time;
         }
         video.currentTime = time;
-        var offsetX=0;
-        var offsetY=0;
+        var offsetX = 0;
+        var offsetY = 0;
         var context = VIDEO_CANVAS.getContext("2d");
         context.drawImage(video, offsetX, offsetY, VIDEO_CANVAS.width, VIDEO_CANVAS.height);
     }
-    function stopVideo(){
-        if(isPlay){
+
+    function stopVideo() {
+        if (isPlay) {
             isPlay = false;
-        }else{
+        } else {
             isPlay = true;
         }
     }
-    function moveTimeLine(frame){
+
+    function moveTimeLine(frame) {
         var time = (frame / FRAME_RATE);
         var colvoFrames = (video1.duration) * 30;
         var toMove = (1150 / colvoFrames);
         var timeline;
-        if(isStart){
+        if (isStart) {
             timeline = 300;
             isStart = false;
-        }else {
-            timeline = Number((document.getElementById("timeline").style.left).replace("px", ""));   
+        } else {
+            timeline = Number((document.getElementById("timeline").style.left).replace("px", ""));
         }
         document.getElementById("timeline").style.left = (timeline + toMove).toString() + "px";
-        if(timeline >= 1450){
+        if (timeline >= 1450) {
             isPlay = false;
         }
     }
 
-    function cutFrame(){
-        if(cutState == 0){
+    function cutFrame() {
+        if (cutState == 0) {
             tmpArr.push(currentFrame);
             cutState++;
-        }else if (cutState == 1) {
+        } else if (cutState == 1) {
             tmpArr.push(currentFrame);
             cutFrames.push(tmpArr);
             tmpArr = [];
@@ -262,24 +270,24 @@
     }
 
 
-    document.addEventListener('keyup', function(event) {
+    document.addEventListener('keyup', function (event) {
         if (event.keyCode == '32') {
             stopVideo();
         }
     });
-    var listener = function(e) {
+    var listener = function (e) {
         var tl = document.getElementById('timeline');
-        tlN = Number((tl.style.left).replace("px", "")); 
-        if(tlN >= 300 && tlN <= 1450){
+        tlN = Number((tl.style.left).replace("px", ""));
+        if (tlN >= 300 && tlN <= 1450) {
             tl.style.left = e.pageX - 5 + "px";
             var colvoFrames = (video1.duration) * 30;
             var toMove = (1150 / colvoFrames);
             var currentLinePos = Number((tl.style.left).replace("px", "")) - 300;
             currentFrame = currentLinePos / toMove;
-            if(!isPlay){
+            if (!isPlay) {
                 showVideoFrame(video1, currentFrame);
             }
-        }else{
+        } else {
             tl.style.left = '300px';
             currentFrame = 0;
             document.removeEventListener('mousemove', listener);
