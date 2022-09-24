@@ -1,0 +1,225 @@
+:root {
+    --scrollbarBg: rgba(5, 5, 5, 1);
+    --scrollbarThumb: rgba(255, 255, 255, 0.8);
+    --scrollbarWidth: 12px;
+    --scrollbarBorder: 3px solid var(--scrollbarBg);
+    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
+}
+
+* {
+    background: #131212;
+}
+
+body {
+    scrollbar-width: var(--scrollbarWidth);
+    scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+body::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--scrollbarBg);
+    border-radius: var(--scrollbarBorderRadius);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarThumb);
+    border-radius: var(--scrollbarBorderRadius);
+    border: var(--scrollbarBorder);
+}
+
+.nav_bar .name_site {
+    color: #FFFFFF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    margin-top: 24px;
+    margin-left: 251px;
+}
+
+.container {
+    display: flex;
+    margin-top: 68px;
+    margin-left: 140px;
+    margin-right: 140px;
+    width: 1640px;
+}
+
+.tools {
+    display: inline;
+    width: 66px;
+    height: 604px;
+    border-radius: 20px;
+    background: #050505;
+}
+
+#scissors {
+    display: inline;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-top: 121px;
+    align-items: center;
+}
+
+#tools_icon {
+    display: inline;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-top: 35px;
+    align-items: center;
+}
+
+#text {
+    display: inline;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-top: 35px;
+    align-items: center;
+}
+
+#palette {
+    display: inline;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-top: 35px;
+    align-items: center;
+}
+
+.video_container {
+    display: inline-block;
+    width: 530px;
+    height: 604px;
+    background: #050505;
+    border-radius: 20px;
+    margin-left: 25px;
+    overflow: auto;
+    scrollbar-width: var(--scrollbarWidth);
+    scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+.video_container::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+}
+
+.video_container::-webkit-scrollbar-track {
+    background: var(--scrollbarBg);
+    border-radius: var(--scrollbarBorderRadius);
+}
+
+.video_container::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarThumb);
+    border-radius: var(--scrollbarBorderRadius);
+    border: var(--scrollbarBorder);
+}
+
+.video_container .video_add_site {
+    display: inline-block;
+    width: 162px;
+    height: 98px;
+    background: #F70303;
+    border-radius: 20px;
+    margin-left: 60px;
+    margin-top: 109px;
+}
+
+.video_container .video_add_site1 {
+    display: inline-block;
+    width: 162px;
+    height: 98px;
+    background: #F70303;
+    border-radius: 20px;
+    margin-left: 85px;
+    margin-top: 109px;
+}
+
+.video_recorder {
+    width: 863px;
+    height: 604px;
+    background: #050505;
+    border-radius: 20px;
+    margin-left: 136px;
+}
+
+.button {
+    width: 419px;
+    height: 63px;
+    background: #2D2B2B;
+    border-radius: 40px;
+    margin-left: 1139px;
+    margin-top: 8px;
+}
+
+#skip_left {
+    width: 64px;
+    height: 64px;
+    margin-left: 88px;
+    border-radius: 20px;
+}
+
+#playbutton {
+    width: 64px;
+    height: 64px;
+    margin-left: 37px;
+    border-radius: 20px;
+}
+
+#skip_right {
+    width: 64px;
+    height: 64px;
+    margin-left: 37px;
+    border-radius: 20px;
+}
+
+.time_lap {
+    display: flex;
+    width: 1418px;
+    height: 232px;
+    background: #0B0A0A;
+    border-radius: 40px;
+    margin-left: 251px;
+    margin-top: 16px;
+}
+
+.time_lap .line_vid_au {
+    width: 1418px;
+    height: 1px;
+    margin-top: 116px;
+    background: #FFFFFF;
+}
+
+.time_lap .line_rel_vid {
+    position: absolute;
+    width: 4px;
+    height: 232px;
+    background: #FFFFFF;
+    left: 1300px;
+    z-index: 1;
+}
+
+.time_lap .scissors_line1 {
+    display: inline;
+    width: 20px;
+    height: 191px;
+    margin-right: 1370px;
+    margin-top: 15px;
+    background: #7166F5;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.time_lap .scissors_line2 {
+    display: inline;
+    width: 20px;
+    height: 191px;
+    margin-top: 15px;
+    background: #7166F5;
+    border-radius: 50px;
+    z-index: 1;
+}
