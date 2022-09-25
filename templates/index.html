@@ -20,7 +20,7 @@
         <img src="{{ url_for('static', filename='img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png') }}"
              alt="tools" id="tools_icon" class="js-open-modal" data-modal="1">
         <img src="{{ url_for('static', filename='img/texteditor_78423 1.png') }}" alt="text" id="text">
-        <img src="{{ url_for('static', filename='img/art-palette_47204 1.png') }}" alt="palette" id="palette" onclick="postCutFrames();">
+        <img src="{{ url_for('static', filename='img/upload.jpg') }}" alt="palette" id="palette" onclick="postCutFrames();">
     </div>
 
     <div class="video_container">
@@ -151,8 +151,7 @@
     }); // end ready
     var VIDEO_CANVAS = null;
     const FRAME_RATE = 30;
-    let video1;
-    let video2;
+    let video;
     let isPlay = true;
     let isStart = true;
     let currentFrame = 0;
@@ -161,26 +160,25 @@
     let tmpArr = [];
 
     function main() {
-        video1 = initializeVideo("static/media/video2.mp4");
-        video2 = initializeVideo("static/media/video1.mp4");
+        video = initializeVideo("static/media/video2.mp4");
         VIDEO_CANVAS = document.getElementById('video');
 
-        video1.addEventListener('loadeddata', (event) => {
+        video.addEventListener('loadeddata', (event) => {
             const context = VIDEO_CANVAS.getContext("2d");
-            context.canvas.width = video1.videoWidth;
-            context.canvas.height = video1.videoHeight;
-            processVideos(video1, video2, 0);
+            context.canvas.width = video.videoWidth;
+            context.canvas.height = video.videoHeight;
+            processVideos(video, 0);
         });
     }
 
     function initializeVideo(filename) {
-        var video = document.createElement('video');
-        video.src = filename;
-        video.load();
-        return video;
+        var videoF = document.createElement('video');
+        videoF.src = filename;
+        videoF.load();
+        return videoF;
     }
 
-    function processVideos(video1, video2, frame1) {
+    function processVideos(video1, frame1) {
         const context = VIDEO_CANVAS.getContext("2d");
         if (isPlay) {
             moveTimeLine(currentFrame);
@@ -205,7 +203,7 @@
             showFrameNumbers(currentFrame);
         }
         setTimeout(function () {
-            processVideos(video1, video2, currentFrame);
+            processVideos(video1,currentFrame);
         }, FRAME_RATE);
     }
 
@@ -215,20 +213,20 @@
         context.textAlign = "left";
         context.textBaseline = "top";
         context.fillStyle = "black";
-        context.fillText(video2.duration, 5, 5);
+        context.fillText(video.duration, 5, 5);
     }
 
-    function showVideoFrame(video, frame, isReverse = false) {
+    function showVideoFrame(video1, frame, isReverse = false) {
         var time = frame / FRAME_RATE;
         document.getElementById("curTime").innerHTML = time;
         if (isReverse) {
             time = video.duration - time;
         }
-        video.currentTime = time;
+        video1.currentTime = time;
         var offsetX = 0;
         var offsetY = 0;
         var context = VIDEO_CANVAS.getContext("2d");
-        context.drawImage(video, offsetX, offsetY, VIDEO_CANVAS.width, VIDEO_CANVAS.height);
+        context.drawImage(video1, offsetX, offsetY, VIDEO_CANVAS.width, VIDEO_CANVAS.height);
     }
 
     function stopVideo() {
@@ -241,7 +239,9 @@
 
     function moveTimeLine(frame) {
         var time = (frame / FRAME_RATE);
-        var colvoFrames = (video1.duration) * 30;
+        var toMinus = countFramesCutSum();
+        console.log(toMinus);
+        var colvoFrames = (video.duration) * 30 - toMinus;
         var toMove = (1150 / colvoFrames);
         var timeline;
         if (isStart) {
@@ -290,6 +290,14 @@
         return JSON.stringify(sendData);
     }
 
+    function countFramesCutSum(){
+        var count = 0;
+        for (var i = 0; i <= cutFrames.length-1; i++) {
+            count += cutFrames[i][1] - cutFrames[i][0];
+        }
+        return count;
+    }
+
 
     document.addEventListener('keyup', function (event) {
         if (event.keyCode == '32') {
@@ -301,12 +309,12 @@
         tlN = Number((tl.style.left).replace("px", ""));
         if (tlN >= 300 && tlN <= 1450) {
             tl.style.left = e.pageX - 5 + "px";
-            var colvoFrames = (video1.duration) * 30;
+            var colvoFrames = (video.duration) * 30;
             var toMove = (1150 / colvoFrames);
             var currentLinePos = Number((tl.style.left).replace("px", "")) - 300;
             currentFrame = currentLinePos / toMove;
             if (!isPlay) {
-                showVideoFrame(video1, currentFrame);
+                showVideoFrame(video, currentFrame);
             }
         } else {
             tl.style.left = '300px';
