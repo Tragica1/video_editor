@@ -262,6 +262,11 @@
             cutState++;
         } else if (cutState == 1) {
             tmpArr.push(currentFrame);
+            if(tmpArr[0] > tmpArr[1]){
+                tmptmp = tmpArr[1];
+                tmpArr[1] = tmpArr[0];
+                tmpArr[0] = tmptmp;
+            }
             cutFrames.push(tmpArr);
             tmpArr = [];
             cutState = 0;
