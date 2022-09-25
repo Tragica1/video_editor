@@ -20,7 +20,7 @@ def index():
             flash('Видео не загружено!')
         else:
             fileName = secure_filename(file.filename)
-            # file.save((os.path.join(app.config['UPLOAD_FOLDER'], fileName)))
+            file.save((os.path.join(app.config['UPLOAD_FOLDER'], fileName)))
             file.save((os.path.join('./', fileName)))
     return render_template('index.html')
 
@@ -38,8 +38,6 @@ def render():
             time1, time2 = item[0] // FRAME_RATE, item[1] // FRAME_RATE
         editor.trim_video(time1, time2)
         editor.render()
-        time.sleep(10)
-        # os.remove((os.path.join(app.config['UPLOAD_FOLDER'], file)))
     return render_template('return.html', ret='../output.mp4')
 
 
