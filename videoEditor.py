@@ -34,3 +34,6 @@ class VideoEdit:
         second_part = self.video.subclip(end, self.duration)
         result = concatenate_videoclips([first_part, second_part])
         self.video = result
+
+    def render(self):
+        self.video.write_videofile('output.mp4')
