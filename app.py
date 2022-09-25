@@ -21,5 +21,13 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/render', methods=['POST'])
+def index1():
+    if request.method == 'POST':
+        cutJson = request.json
+        data = json.load(cutJson)
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
     app.run()

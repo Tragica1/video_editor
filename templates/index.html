@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +20,7 @@
         <img src="{{ url_for('static', filename='img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png') }}"
              alt="tools" id="tools_icon" class="js-open-modal" data-modal="1">
         <img src="{{ url_for('static', filename='img/texteditor_78423 1.png') }}" alt="text" id="text">
-        <img src="{{ url_for('static', filename='img/art-palette_47204 1.png') }}" alt="palette" id="palette">
+        <img src="{{ url_for('static', filename='img/art-palette_47204 1.png') }}" alt="palette" id="palette" onclick="postCutFrames();">
     </div>
 
     <div class="video_container">
@@ -267,6 +266,28 @@
             tmpArr = [];
             cutState = 0;
         }
+    }
+
+    function postCutFrames(){
+ 
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/render");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = () => {
+            if (xhr.status == 200) { 
+                console.log(xhr.responseText);
+            } else {
+                console.log("Server response: ", xhr.statusText);
+            }
+        };
+        xhr.send(createJson());     // отправляем значение user в методе send
+    }
+
+    function createJson(){
+        var sendData = {
+            framesToCut: cutFrames
+        }
+        return JSON.stringify(sendData);
     }
 
 
