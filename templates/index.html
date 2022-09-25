@@ -20,7 +20,8 @@
         <img src="{{ url_for('static', filename='img/3592841-cog-gear-general-machine-office-setting-settings_107765 1.png') }}"
              alt="tools" id="tools_icon" class="js-open-modal" data-modal="1">
         <img src="{{ url_for('static', filename='img/texteditor_78423 1.png') }}" alt="text" id="text">
-        <img src="{{ url_for('static', filename='img/upload.jpg') }}" alt="palette" id="palette" onclick="postCutFrames();">
+            <img src="{{ url_for('static', filename='img/upload.jpg') }}" alt="palette" id="palette"
+                 onclick="postCutFrames();">
     </div>
 
     <div class="video_container">
@@ -160,7 +161,7 @@
     let tmpArr = [];
 
     function main() {
-        video = initializeVideo("static/media/video2.mp4");
+        video = initializeVideo("static/media/132.mp4");
         VIDEO_CANVAS = document.getElementById('video');
 
         video.addEventListener('loadeddata', (event) => {
@@ -203,7 +204,7 @@
             showFrameNumbers(currentFrame);
         }
         setTimeout(function () {
-            processVideos(video1,currentFrame);
+            processVideos(video1, currentFrame);
         }, FRAME_RATE);
     }
 
@@ -268,13 +269,13 @@
         }
     }
 
-    function postCutFrames(){
- 
+    function postCutFrames() {
+
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/render");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = () => {
-            if (xhr.status == 200) { 
+            if (xhr.status == 200) {
                 console.log(xhr.responseText);
             } else {
                 console.log("Server response: ", xhr.statusText);
@@ -283,16 +284,16 @@
         xhr.send(createJson());     // отправляем значение user в методе send
     }
 
-    function createJson(){
+    function createJson() {
         var sendData = {
             framesToCut: cutFrames
         }
         return JSON.stringify(sendData);
     }
 
-    function countFramesCutSum(){
+    function countFramesCutSum() {
         var count = 0;
-        for (var i = 0; i <= cutFrames.length-1; i++) {
+        for (var i = 0; i <= cutFrames.length - 1; i++) {
             count += cutFrames[i][1] - cutFrames[i][0];
         }
         return count;
