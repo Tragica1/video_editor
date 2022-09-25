@@ -2,9 +2,9 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 
 
 class VideoEdit:
-    def __init__(self, video: VideoFileClip):
-        self.video = video
-        self.duration = video.duration
+    def __init__(self, filename: str):
+        self.video = VideoFileClip(filename)
+        self.duration = self.video.duration
 
     def add_text(self, text: str, fontsize: int, color: str, position: tuple, duration: int, start: int,
                  end: int):
@@ -34,4 +34,3 @@ class VideoEdit:
         second_part = self.video.subclip(end, self.duration)
         result = concatenate_videoclips([first_part, second_part])
         self.video = result
-
